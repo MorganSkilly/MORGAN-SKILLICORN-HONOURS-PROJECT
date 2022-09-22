@@ -43,7 +43,6 @@ ExportedObj/
 *.booproj
 *.svd
 *.pdb
-*.xcworkspacedata
 *.mdb
 *.mdf
 *.opendb
@@ -72,3 +71,5 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+/Library/PackageCache/com.unity.ide.visualstudio@2.0.14/Editor/AppleEventIntegration~/
