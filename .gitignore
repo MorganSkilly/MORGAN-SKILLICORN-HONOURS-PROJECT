@@ -43,6 +43,7 @@ ExportedObj/
 *.booproj
 *.svd
 *.pdb
+*.xcworkspacedata
 *.mdb
 *.mdf
 *.opendb
