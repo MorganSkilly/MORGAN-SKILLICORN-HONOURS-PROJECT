@@ -352,9 +352,13 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
+"Assets/ActiveWeaponManager.cs"
 "Assets/MovementController.cs"
 "Assets/Player Movement.cs"
 "Assets/Weapon System/Scriptable Objects/Weapon.cs"
+"Assets/Weapon System/Weapon Inputs.cs"
+"Assets/WeaponFiringSystem.cs"
+"Assets/WeaponTarget.cs"
 -langversion:9.0
 
 /deterministic

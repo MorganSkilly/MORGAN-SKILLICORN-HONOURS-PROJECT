@@ -6,6 +6,7 @@ MonoImporter:
   defaultReferences:
   - m_ViewDataDictionary: {instanceID: 0}
   - aTexture: {fileID: 2800000, guid: 2d13a65eadd3f2a43bc0ef2263c33816, type: 3}
+  - baseWeaponPrefab: {fileID: 4499757030279796447, guid: c703c6899daf95c4084e8f14e08915e9, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
