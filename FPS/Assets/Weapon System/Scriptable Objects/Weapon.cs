@@ -29,6 +29,9 @@ public class Weapon : ScriptableObject
     [Tooltip("If true the trigger can be held for automatic firing. For single shot firing like DMRs and snipers select false.")]
     public bool automatic = true;
 
+    [Tooltip("The ammount of ammo to initialise this gun with.")]
+    public int startAmmo = 100;
+
     [Tooltip("How many rounds are contained in a single magazine. For single fire weapons like RPGs and shell loaded shotguns select 1.")]
     public int magazineSize = 30;
 

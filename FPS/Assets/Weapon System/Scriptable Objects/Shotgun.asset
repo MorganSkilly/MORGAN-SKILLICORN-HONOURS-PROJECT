@@ -20,6 +20,7 @@ MonoBehaviour:
   baseDamage: 50
   criticalMultiplier: 50
   automatic: 0
+  startAmmo: 30
   magazineSize: 2
   reloadSpeed: 5000
   FireRate: 40

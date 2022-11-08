@@ -71,6 +71,9 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-\Library\ArtifactDB
-FPS/Library/ArtifactDB
-FPS/Library/ArtifactDB
+/Library/ArtifactDB
+/Library/ArtifactDB
+/Library/Artifacts/*
+/Library/Artifacts/
+/Library/SourceAssetDB
+FPS/Library/Artifacts/*

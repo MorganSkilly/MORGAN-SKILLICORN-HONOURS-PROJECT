@@ -71,6 +71,15 @@ public partial class @WeaponActionsMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""79e0ce15-c3b3-49cb-b8cb-7d2ad07f9eee"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -78,7 +87,7 @@ public partial class @WeaponActionsMap : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""9fcf73ff-7761-471c-81aa-e1f3c4136940"",
                     ""path"": ""<Keyboard>/1"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Primary"",
@@ -89,7 +98,7 @@ public partial class @WeaponActionsMap : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""2605c6e8-6f20-4559-ab24-4ff44127aea4"",
                     ""path"": ""<Keyboard>/2"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Secondary"",
@@ -128,6 +137,17 @@ public partial class @WeaponActionsMap : IInputActionCollection2, IDisposable
                     ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4f03ba1b-53f8-42e0-8876-439d12a5986b"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -141,6 +161,7 @@ public partial class @WeaponActionsMap : IInputActionCollection2, IDisposable
         m_WeaponSystem_Swap = m_WeaponSystem.FindAction("Swap", throwIfNotFound: true);
         m_WeaponSystem_Fire = m_WeaponSystem.FindAction("Fire", throwIfNotFound: true);
         m_WeaponSystem_Aim = m_WeaponSystem.FindAction("Aim", throwIfNotFound: true);
+        m_WeaponSystem_Reload = m_WeaponSystem.FindAction("Reload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -205,6 +226,7 @@ public partial class @WeaponActionsMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_WeaponSystem_Swap;
     private readonly InputAction m_WeaponSystem_Fire;
     private readonly InputAction m_WeaponSystem_Aim;
+    private readonly InputAction m_WeaponSystem_Reload;
     public struct WeaponSystemActions
     {
         private @WeaponActionsMap m_Wrapper;
@@ -214,6 +236,7 @@ public partial class @WeaponActionsMap : IInputActionCollection2, IDisposable
         public InputAction @Swap => m_Wrapper.m_WeaponSystem_Swap;
         public InputAction @Fire => m_Wrapper.m_WeaponSystem_Fire;
         public InputAction @Aim => m_Wrapper.m_WeaponSystem_Aim;
+        public InputAction @Reload => m_Wrapper.m_WeaponSystem_Reload;
         public InputActionMap Get() { return m_Wrapper.m_WeaponSystem; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -238,6 +261,9 @@ public partial class @WeaponActionsMap : IInputActionCollection2, IDisposable
                 @Aim.started -= m_Wrapper.m_WeaponSystemActionsCallbackInterface.OnAim;
                 @Aim.performed -= m_Wrapper.m_WeaponSystemActionsCallbackInterface.OnAim;
                 @Aim.canceled -= m_Wrapper.m_WeaponSystemActionsCallbackInterface.OnAim;
+                @Reload.started -= m_Wrapper.m_WeaponSystemActionsCallbackInterface.OnReload;
+                @Reload.performed -= m_Wrapper.m_WeaponSystemActionsCallbackInterface.OnReload;
+                @Reload.canceled -= m_Wrapper.m_WeaponSystemActionsCallbackInterface.OnReload;
             }
             m_Wrapper.m_WeaponSystemActionsCallbackInterface = instance;
             if (instance != null)
@@ -257,6 +283,9 @@ public partial class @WeaponActionsMap : IInputActionCollection2, IDisposable
                 @Aim.started += instance.OnAim;
                 @Aim.performed += instance.OnAim;
                 @Aim.canceled += instance.OnAim;
+                @Reload.started += instance.OnReload;
+                @Reload.performed += instance.OnReload;
+                @Reload.canceled += instance.OnReload;
             }
         }
     }
@@ -268,5 +297,6 @@ public partial class @WeaponActionsMap : IInputActionCollection2, IDisposable
         void OnSwap(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }

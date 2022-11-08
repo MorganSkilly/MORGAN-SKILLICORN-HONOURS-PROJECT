@@ -20,6 +20,7 @@ public class WeaponEditor : EditorWindow
     int baseDamage = 10;
     int criticalMultiplier = 10;
     bool automatic = true;
+    int startAmmo = 100;
     int magazineSize = 30;
     int reloadSpeed = 5000;
     int fireRate = 100;
@@ -50,6 +51,7 @@ public class WeaponEditor : EditorWindow
         description = EditorGUILayout.TextField("description", description);
         baseDamage = EditorGUILayout.IntField("base damage", baseDamage);
         criticalMultiplier = EditorGUILayout.IntField("critical multiplier", criticalMultiplier);
+        startAmmo = EditorGUILayout.IntField("starting ammo", startAmmo);
         magazineSize = EditorGUILayout.IntField("magazine size", magazineSize);
         reloadSpeed = EditorGUILayout.IntField("reload speed", reloadSpeed);
         fireRate = EditorGUILayout.IntField("fire rate", fireRate);

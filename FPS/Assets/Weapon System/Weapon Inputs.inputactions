@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Reload",
+                    "type": "Button",
+                    "id": "79e0ce15-c3b3-49cb-b8cb-7d2ad07f9eee",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -56,7 +65,7 @@
                     "name": "",
                     "id": "9fcf73ff-7761-471c-81aa-e1f3c4136940",
                     "path": "<Keyboard>/1",
-                    "interactions": "Press",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Primary",
@@ -67,7 +76,7 @@
                     "name": "",
                     "id": "2605c6e8-6f20-4559-ab24-4ff44127aea4",
                     "path": "<Keyboard>/2",
-                    "interactions": "Press",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Secondary",
@@ -104,6 +113,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4f03ba1b-53f8-42e0-8876-439d12a5986b",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

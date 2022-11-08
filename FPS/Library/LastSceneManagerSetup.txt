@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/PolygonPrototype/Scenes/Demo.unity
+- path: Assets/Scenes/Shooting Range.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
