@@ -20,6 +20,8 @@ public class ActiveWeaponManager : MonoBehaviour
 
     private GameObject weaponModel;
 
+    public GameObject lookAt;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +49,8 @@ public class ActiveWeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Quaternion targetRot = Quaternion.LookRotation(lookAt.transform.position - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, 10 * Time.deltaTime);
     }
 
     private void SwitchToPrimary(InputAction.CallbackContext context)

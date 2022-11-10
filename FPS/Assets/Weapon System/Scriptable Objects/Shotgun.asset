@@ -16,14 +16,14 @@ MonoBehaviour:
   description: double barrel shotgun
   thumbnail: {fileID: 10900, guid: 0000000000000000f000000000000000, type: 0}
   model: {fileID: 6871168994223393390, guid: 5f16e283678ff37489ea51be41990f4f, type: 3}
-  flipY: 1
+  flipY: 0
   baseDamage: 50
   criticalMultiplier: 50
-  automatic: 0
+  automatic: 1
   startAmmo: 30
   magazineSize: 2
   reloadSpeed: 5000
-  FireRate: 40
+  FireRate: 1200
   EffectiveRange: 5
   Range: 20
   AdsSpeed: 1

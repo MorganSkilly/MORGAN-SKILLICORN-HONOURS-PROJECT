@@ -16,14 +16,14 @@ MonoBehaviour:
   description: This is an AR15 assault rifle
   thumbnail: {fileID: 10900, guid: 0000000000000000f000000000000000, type: 0}
   model: {fileID: 6871168994223393390, guid: ba601a3c39582314a8cd5232fd03c5ac, type: 3}
-  flipY: 1
+  flipY: 0
   baseDamage: 10
   criticalMultiplier: 10
   automatic: 1
   startAmmo: 240
   magazineSize: 30
   reloadSpeed: 5000
-  FireRate: 100
+  FireRate: 600
   EffectiveRange: 10
   Range: 100
   AdsSpeed: 2

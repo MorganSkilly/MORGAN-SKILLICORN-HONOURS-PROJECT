@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 585115601}
   - component: {fileID: 585115602}
   - component: {fileID: 585115603}
-  - component: {fileID: 585115604}
-  m_Layer: 0
+  - component: {fileID: 2044116510}
+  m_Layer: 2
   m_Name: Active Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +48,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   primary: {fileID: 11400000, guid: 66498a708bfecc641ba06d57f6ba04ac, type: 2}
   secondary: {fileID: 11400000, guid: 3ebe3091d803d8e42a1a750f16e6fc03, type: 2}
+  primaryAmmo: 0
+  secondaryAmmo: 0
+  primaryCurrentMag: 0
+  secondaryCurrentMag: 0
+  isPrimary: 1
+  lookAt: {fileID: 1326444500}
 --- !u!114 &585115603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,27 +66,108 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1506179af88596e4f959e4ccd45ce1b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastOrigin: {fileID: 1448621542}
+  raycastOrigin: {fileID: 963194225}
   currentWeapon: {fileID: 0}
---- !u!1183024399 &585115604
-LookAtConstraint:
+  targetPos: {fileID: 1326444500}
+  shot: {fileID: 8300000, guid: 4e14f36365321004fa6277cf1cca433a, type: 3}
+  magEmpty: {fileID: 8300000, guid: f96ff6b6163ec904997d0c2f76b554b6, type: 3}
+  particleEffect: {fileID: 5657496265996640836, guid: ebdb945a0d399e9468fd0c10d1cfe341, type: 3}
+--- !u!82 &2044116510
+AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 585115600}
   m_Enabled: 1
-  m_Weight: 1
-  m_RotationAtRest: {x: 0, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 180, z: 0}
-  m_Roll: 0
-  m_WorldUpObject: {fileID: 0}
-  m_UseUpObject: 0
-  m_IsContraintActive: 1
-  m_IsLocked: 0
-  m_Sources:
-  - sourceTransform: {fileID: 1326444501}
-    weight: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.7
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &915583718
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,7 +177,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 915583719}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Weapon Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +211,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -209,7 +296,7 @@ GameObject:
   - component: {fileID: 1032695380}
   - component: {fileID: 1032695382}
   - component: {fileID: 1032695381}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1138761422}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +401,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1326444501}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LookAtPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,7 +435,7 @@ GameObject:
   - component: {fileID: 1371179983}
   - component: {fileID: 1371179982}
   - component: {fileID: 1371179981}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Weapon UI Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -446,7 +533,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1448621543}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Raycast Origin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,7 +566,7 @@ GameObject:
   - component: {fileID: 1448945897}
   - component: {fileID: 1448945899}
   - component: {fileID: 1448945898}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +603,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1448945896}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -560,7 +647,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2072376986}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -597,7 +684,7 @@ GameObject:
   - component: {fileID: 896112882}
   - component: {fileID: 896112879}
   - component: {fileID: 896112880}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -674,6 +761,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 127f0852-23d6-4c9f-b88e-49b64b99181f
     m_ActionName: Player Map/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1b551493-0091-4319-a7b7-1c727ce5f8eb
+    m_ActionName: Player Map/Run[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f790a4ab-2c0a-4bf0-9b20-047bd3f32d09
+    m_ActionName: Player Map/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bd5745fa-95cc-4e88-81af-ba93a74e4c7e
+    m_ActionName: Player Map/Crouch[/Keyboard/c]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player Map
@@ -699,6 +798,6 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  mouseSens: 100
+  mouseSens: 25
   moveSpeed: 10
   gravity: -19.62

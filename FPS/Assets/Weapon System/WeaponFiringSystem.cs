@@ -21,9 +21,12 @@ public class WeaponFiringSystem : MonoBehaviour
 
     public AudioClip shot;
     public AudioClip magEmpty;
+    public AudioClip reload;
     AudioSource audioSource;
 
     public GameObject particleEffect;
+
+    private float timer = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +56,7 @@ public class WeaponFiringSystem : MonoBehaviour
     private void FixedUpdate()
     {
         // Bit shift the index of the layer (8) to get a bit mask
-        int layerMask = 1 << 8;
+        int layerMask = 1 << 2;
 
         // This would cast rays only against colliders in layer 8.
         // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
@@ -74,22 +77,32 @@ public class WeaponFiringSystem : MonoBehaviour
 
         currentWeapon = GetComponent<ActiveWeaponManager>();
 
-        if (firing)
+        timer += Time.deltaTime;
+
+        float fireRate = currentWeapon.GetCurrentWeapon().FireRate / 60;
+        fireRate = 1 / fireRate;
+
+        if (timer > fireRate)
         {
-            if (currentWeapon.GetCurrentWeapon().automatic)
+            timer = timer - fireRate;
+
+            if (!firing)
             {
-                FireRaycast();
+                firing = false;
             }
             else
             {
-                FireRaycast();
+                if (currentWeapon.GetCurrentWeapon().automatic)
+                {
+                    FireRaycast();
+                }
+                else
+                {
+                    FireRaycast();
 
-                firing = false;
+                    firing = false;
+                }
             }
-        }
-        else
-        {
-            firing = false;
         }
     }
 
@@ -106,13 +119,14 @@ public class WeaponFiringSystem : MonoBehaviour
         if (hasAmmo)
         {
             // Bit shift the index of the layer (8) to get a bit mask
-            int layerMask = 1 << 8;
+            int layerMask = 1 << 2;
 
             // This would cast rays only against colliders in layer 8.
             // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
             layerMask = ~layerMask;
 
             RaycastHit hit;
+
 
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(raycastOrigin.transform.position, raycastOrigin.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
@@ -202,6 +216,9 @@ public class WeaponFiringSystem : MonoBehaviour
                 currentWeapon.secondaryAmmo = 0;
             }
         }
+
+
+        audioSource.PlayOneShot(reload, 0.5f);
     }
 
     // Update is called once per frame

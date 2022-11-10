@@ -16,14 +16,14 @@ MonoBehaviour:
   description: This is a pistol
   thumbnail: {fileID: 10900, guid: 0000000000000000f000000000000000, type: 0}
   model: {fileID: 6871168994223393390, guid: 75158a5002d96f841b1b94f1c3f0afc1, type: 3}
-  flipY: 0
+  flipY: 1
   baseDamage: 10
   criticalMultiplier: 10
   automatic: 0
   startAmmo: 20
   magazineSize: 10
   reloadSpeed: 5000
-  FireRate: 100
+  FireRate: 6000
   EffectiveRange: 10
   Range: 100
   AdsSpeed: 3

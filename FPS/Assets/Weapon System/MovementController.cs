@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MovementController : MonoBehaviour
 {
@@ -11,13 +12,16 @@ public class MovementController : MonoBehaviour
     public float groundDist;
     public LayerMask groundMask;
     public float mouseSens = 2f;
-    public float moveSpeed = 10f;
+    public float walkSpeed = 10f;
+    public float runSpeed = 20f;
+    private float moveSpeed = 10f;
     public float gravity = -9.81f;
 
     private float xRot = 0f;
     private Vector3 velocity;
     private CharacterController controller;
     private bool isGrounded;
+    private bool isCrouched = false;
 
     void Start()
     {
@@ -25,15 +29,49 @@ public class MovementController : MonoBehaviour
         Cursor.visible = false;
 
         controller = GetComponent<CharacterController>();
+
     }
 
     private void Awake()
     {       
         playerActions = new PlayerActions();
+        playerActions.PlayerMap.Crouch.started += Crouch;
+        playerActions.PlayerMap.Crouch.canceled += CrouchCancel;
+        playerActions.PlayerMap.Run.started += Run;
+        playerActions.PlayerMap.Run.canceled += Walk;
+    }
+
+    void Crouch(InputAction.CallbackContext context)
+    {
+        isCrouched = true;
+    }
+
+    void CrouchCancel(InputAction.CallbackContext context)
+    {
+        isCrouched = false;
+    }
+
+    void Run(InputAction.CallbackContext context)
+    {
+        moveSpeed = runSpeed;
+    }
+
+    void Walk(InputAction.CallbackContext context)
+    {
+        moveSpeed = walkSpeed;
     }
 
     void Update()
     {
+        if (isCrouched)
+        {
+            headObject.transform.localPosition = Vector3.Slerp(headObject.transform.localPosition, new Vector3(0, -1.5f, 0), 5f * Time.deltaTime);
+        }
+        else
+        {
+            headObject.transform.localPosition = Vector3.Slerp(headObject.transform.localPosition, new Vector3(0, 0, 0), 5f * Time.deltaTime);
+        }
+
         try
         {
             MouseLookUpdate();
@@ -68,7 +106,7 @@ public class MovementController : MonoBehaviour
         float mouseY = playerActions.PlayerMap.Look.ReadValue<Vector2>().y * mouseSens * Time.deltaTime;
 
         xRot -= mouseY;
-        xRot = Mathf.Clamp(xRot, -90, 90);
+        xRot = Mathf.Clamp(xRot, -75, 75);
 
         transform.Rotate(Vector3.up * mouseX);
         headObject.transform.localRotation = Quaternion.Euler(xRot, 0f, 0f);
