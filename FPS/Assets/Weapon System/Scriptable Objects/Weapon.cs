@@ -38,7 +38,7 @@ public class Weapon : ScriptableObject
     [Tooltip("(Milliseconds) How long it takes to reload, the reload animation is minipulated automatically to account for this parameter.")] //do this in animator speed to figure out speed
     public int reloadSpeed = 5000;
     
-    [Tooltip("(Milliseconds) Delay after firing a shot before the next shot can be triggered.")] //do this in animator speed to figure out speed
+    [Tooltip("(Milliseconds) Delay after firing a shot before the next shot can be triggered.")]
     public int FireRate = 100;
 
     [Tooltip("Distance from raycast until damage starts to fall off.")]
@@ -49,5 +49,14 @@ public class Weapon : ScriptableObject
 
     [Tooltip("Speed of aiming down sights.")]
     public float AdsSpeed = 0.5f;
+
+    [Tooltip("Sound clips for weapon.")]
+    public AudioClip shot, emptyShot, reload;
+
+    [Tooltip("Position of the end of the barrel.")]
+    public Vector3 barrelExit;
+
+    [Tooltip("Particle effects for shots.")]
+    public GameObject muzzleFlash, impactShot;
 }
 

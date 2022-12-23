@@ -20,10 +20,16 @@ MonoBehaviour:
   baseDamage: 10
   criticalMultiplier: 10
   automatic: 0
-  startAmmo: 20
+  startAmmo: 100
   magazineSize: 10
   reloadSpeed: 5000
   FireRate: 6000
   EffectiveRange: 10
   Range: 100
   AdsSpeed: 3
+  shot: {fileID: 8300000, guid: 4e14f36365321004fa6277cf1cca433a, type: 3}
+  emptyShot: {fileID: 0}
+  reload: {fileID: 0}
+  barrelExit: {x: 0, y: 0.15, z: 0.5}
+  muzzleFlash: {fileID: 8297297760095153332, guid: cce667f80cb97b74bb871d44b01e3375, type: 3}
+  impactShot: {fileID: 0}

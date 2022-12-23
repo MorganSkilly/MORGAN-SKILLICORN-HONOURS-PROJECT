@@ -27,6 +27,9 @@ public class WeaponEditor : EditorWindow
     int effectiveRange = 10;
     int range = 100;
     float adsSpeed = 0.5f;
+    AudioClip shot, emptyShot, reload;
+    Vector3 barrelExit;
+    GameObject muzzleFlash, impactShot;
 
     private string UIspacer = "                                                                                                                                                                                                                                                                                                                                                                             ";
 
@@ -58,15 +61,32 @@ public class WeaponEditor : EditorWindow
         effectiveRange = EditorGUILayout.IntField("effective range", effectiveRange);
         range = EditorGUILayout.IntField("range", range);
         adsSpeed = EditorGUILayout.FloatField("ads speed", adsSpeed);
+
         automatic = EditorGUILayout.Toggle("automatic", automatic);
 
+        barrelExit = EditorGUILayout.Vector3Field("barrel exit position", barrelExit);
+        flipY = EditorGUILayout.Toggle("flip Y", flipY);
 
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label(UIspacer, EditorStyles.wordWrappedLabel);
         thumbnail = TextureField("thumbnail", thumbnail);
         model = GameObjectField("model", model);
-        flipY = EditorGUILayout.Toggle("flipY", flipY);
         EditorGUILayout.EndHorizontal();
+
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label(UIspacer, EditorStyles.wordWrappedLabel);
+        shot = AudioClipField("shot", shot);
+        emptyShot = AudioClipField("empty Shot", emptyShot);
+        reload = AudioClipField("reload", reload);
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label(UIspacer, EditorStyles.wordWrappedLabel);
+        muzzleFlash = GameObjectField("muzzle flash effect", muzzleFlash);
+        impactShot = GameObjectField("impact shot effect", impactShot);
+        EditorGUILayout.EndHorizontal();
+
 
         GUILayout.Label("\n", EditorStyles.wordWrappedLabel);
 
@@ -90,10 +110,28 @@ public class WeaponEditor : EditorWindow
             newWeapon.EffectiveRange = effectiveRange;
             newWeapon.Range = range;
             newWeapon.AdsSpeed = adsSpeed;
+            newWeapon.shot = shot;
+            newWeapon.emptyShot = emptyShot;
+            newWeapon.reload = reload;
+            newWeapon.barrelExit = barrelExit;
+            newWeapon.muzzleFlash = muzzleFlash;
+            newWeapon.impactShot = impactShot;
 
             AssetDatabase.CreateAsset(newWeapon, weaponsFolder + name + ".asset");
             Debug.Log("Generated new weapon");
         }
+    }
+
+    private static AudioClip AudioClipField(string name, AudioClip audioClip)
+    {
+        GUILayout.BeginVertical();
+        var style = new GUIStyle(GUI.skin.label);
+        style.alignment = TextAnchor.UpperCenter;
+        style.fixedWidth = 70;
+        GUILayout.Label(name, style);
+        var result = (AudioClip)EditorGUILayout.ObjectField(audioClip, typeof(AudioClip), false, GUILayout.Width(70), GUILayout.Height(70));
+        GUILayout.EndVertical();
+        return result;
     }
 
     private static Texture TextureField(string name, Texture texture)

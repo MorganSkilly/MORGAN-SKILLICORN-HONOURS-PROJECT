@@ -27,3 +27,9 @@ MonoBehaviour:
   EffectiveRange: 5
   Range: 20
   AdsSpeed: 1
+  shot: {fileID: 0}
+  emptyShot: {fileID: 0}
+  reload: {fileID: 0}
+  barrelExit: {x: 0, y: 0, z: 0}
+  muzzleFlash: {fileID: 8297297760095153332, guid: cce667f80cb97b74bb871d44b01e3375, type: 3}
+  impactShot: {fileID: 0}

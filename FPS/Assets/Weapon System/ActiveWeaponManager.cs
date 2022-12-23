@@ -94,7 +94,7 @@ public class ActiveWeaponManager : MonoBehaviour
         weaponModel.transform.parent = gameObject.transform;
     }
 
-    public Weapon GetCurrentWeapon()
+    public Weapon GetCurrentWeapon()//returns the active weapon instance depending on whether primary or secondary is active
     {
         if (isPrimary)
             return primary;
