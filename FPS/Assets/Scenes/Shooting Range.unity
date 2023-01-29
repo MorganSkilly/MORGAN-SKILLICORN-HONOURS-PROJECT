@@ -322,10 +322,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 585115602, guid: cffe12cc36d27d9499901b5346dcc13c, type: 3}
+      propertyPath: primary
+      value: 
+      objectReference: {fileID: 11400000, guid: abdad0f3708a05e4996be60a319b56e4, type: 2}
+    - target: {fileID: 585115602, guid: cffe12cc36d27d9499901b5346dcc13c, type: 3}
+      propertyPath: secondary
+      value: 
+      objectReference: {fileID: 11400000, guid: abdad0f3708a05e4996be60a319b56e4, type: 2}
     - target: {fileID: 585115603, guid: cffe12cc36d27d9499901b5346dcc13c, type: 3}
       propertyPath: reload
       value: 
       objectReference: {fileID: 8300000, guid: c9a7d8b4af8adb54aad4a144ad181587, type: 3}
+    - target: {fileID: 915583718, guid: cffe12cc36d27d9499901b5346dcc13c, type: 3}
+      propertyPath: m_Name
+      value: Weapon UI
+      objectReference: {fileID: 0}
     - target: {fileID: 3500028186395534758, guid: cffe12cc36d27d9499901b5346dcc13c, type: 3}
       propertyPath: m_RootOrder
       value: 0

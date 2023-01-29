@@ -357,7 +357,7 @@
 "Assets/Weapon System/DamageReciever.cs"
 "Assets/Weapon System/Default Assets/Basic Movement Controller/Player Movement.cs"
 "Assets/Weapon System/MovementController.cs"
-"Assets/Weapon System/Scriptable Objects/Weapon.cs"
+"Assets/Weapon System/Scriptable Objects/Scripts/Weapon.cs"
 "Assets/Weapon System/Weapon Inputs.cs"
 "Assets/Weapon System/WeaponFiringSystem.cs"
 "Assets/Weapon System/WeaponTarget.cs"

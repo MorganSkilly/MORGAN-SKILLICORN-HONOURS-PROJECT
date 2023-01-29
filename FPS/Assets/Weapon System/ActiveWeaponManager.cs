@@ -22,16 +22,22 @@ public class ActiveWeaponManager : MonoBehaviour
 
     public GameObject lookAt;
 
+    public Animator animator;
+    public AnimatorOverrideController animatorOverrideController;
+
+    public AnimationClipOverrides clipOverrides;
+
     // Start is called before the first frame update
     void Start()
     {
-        UpdateWeaponModel(primary);
+        UpdateWeapon(primary);
 
-        primaryAmmo = primary.startAmmo - primary.magazineSize;
-        secondaryAmmo = secondary.startAmmo - secondary.magazineSize;
+        primaryAmmo = primary.parameters.startAmmo - primary.parameters.magazineSize;
+        secondaryAmmo = secondary.parameters.startAmmo - secondary.parameters.magazineSize;
 
-        primaryCurrentMag = primary.magazineSize;
-        secondaryCurrentMag = secondary.magazineSize;
+        primaryCurrentMag = primary.parameters.magazineSize;
+        secondaryCurrentMag = secondary.parameters.magazineSize;
+                
     }
 
     private void Awake()
@@ -55,12 +61,12 @@ public class ActiveWeaponManager : MonoBehaviour
 
     private void SwitchToPrimary(InputAction.CallbackContext context)
     {
-        UpdateWeaponModel(primary);
+        UpdateWeapon(primary);
         isPrimary = true;
     }
     private void SwitchToSecondary(InputAction.CallbackContext context)
     {
-        UpdateWeaponModel(secondary);
+        UpdateWeapon(secondary);
         isPrimary = false;
     }
 
@@ -78,20 +84,46 @@ public class ActiveWeaponManager : MonoBehaviour
             {
                 SwitchToPrimary(context);
             }
-        }        
+        }
+        
     }
 
-    void UpdateWeaponModel(Weapon weapon)
+    void UpdateWeapon(Weapon weapon)
     {
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
         }
-
-        weaponModel = Instantiate(weapon.model, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
-        if (!weapon.flipY)
+         
+        weaponModel = Instantiate(weapon.parameters.model, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
+        if (!weapon.parameters.flipY)
             weaponModel.transform.Rotate(new Vector3(0, 180, 0));
         weaponModel.transform.parent = gameObject.transform;
+
+        animator = weaponModel.GetComponent<Animator>();
+        animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+        animator.runtimeAnimatorController = animatorOverrideController;
+        clipOverrides = new AnimationClipOverrides(animatorOverrideController.overridesCount);
+        animatorOverrideController.GetOverrides(clipOverrides);
+
+        clipOverrides["Reload"] = weapon.parameters.reloadAnim;
+        animatorOverrideController.ApplyOverrides(clipOverrides);
+    }
+
+    public class AnimationClipOverrides : List<KeyValuePair<AnimationClip, AnimationClip>>
+    {
+        public AnimationClipOverrides(int capacity) : base(capacity) { }
+
+        public AnimationClip this[string name]
+        {
+            get { return this.Find(x => x.Key.name.Equals(name)).Value; }
+            set
+            {
+                int index = this.FindIndex(x => x.Key.name.Equals(name));
+                if (index != -1)
+                    this[index] = new KeyValuePair<AnimationClip, AnimationClip>(this[index].Key, value);
+            }
+        }
     }
 
     public Weapon GetCurrentWeapon()//returns the active weapon instance depending on whether primary or secondary is active

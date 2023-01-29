@@ -97,7 +97,7 @@ public class WeaponFiringSystem : MonoBehaviour
 
         shootTimer += Time.deltaTime;
 
-        float fireRate = currentWeapon.GetCurrentWeapon().FireRate / 60;
+        float fireRate = currentWeapon.GetCurrentWeapon().parameters.fireRate / 60;
         fireRate = 1 / fireRate;
 
         if (shootTimer > fireRate)
@@ -110,7 +110,7 @@ public class WeaponFiringSystem : MonoBehaviour
             }
             else
             {
-                if (currentWeapon.GetCurrentWeapon().automatic)
+                if (currentWeapon.GetCurrentWeapon().parameters.automatic)
                 {
                     FireRaycast();
                 }
@@ -129,11 +129,11 @@ public class WeaponFiringSystem : MonoBehaviour
 
         if (ads)
         {
-            transform.localPosition = Vector3.Slerp(transform.localPosition, adsPos, (5f * currentWeapon.GetCurrentWeapon().AdsSpeed) * Time.deltaTime);
+            transform.localPosition = Vector3.Slerp(transform.localPosition, adsPos, (5f * currentWeapon.GetCurrentWeapon().parameters.adsSpeed) * Time.deltaTime);
         }
         else
         {
-            transform.localPosition = Vector3.Slerp(transform.localPosition, startPos, (5f * currentWeapon.GetCurrentWeapon().AdsSpeed) * Time.deltaTime);
+            transform.localPosition = Vector3.Slerp(transform.localPosition, startPos, (5f * currentWeapon.GetCurrentWeapon().parameters.adsSpeed) * Time.deltaTime);
         }
 
         if (!reloaded && reloading && !currentWeapon.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Reload"))
@@ -151,7 +151,7 @@ public class WeaponFiringSystem : MonoBehaviour
         if (reloaded && currentWeapon.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Reload"))
         {
             reloadTimer += Time.deltaTime;
-            currentWeapon.GetComponentInChildren<Animator>().speed = currentWeapon.GetCurrentWeapon().reloadSpeed / reloadTimer;
+            currentWeapon.GetComponentInChildren<Animator>().speed = currentWeapon.GetCurrentWeapon().parameters.reloadSpeed / reloadTimer;
         }
     }
 
@@ -197,7 +197,7 @@ public class WeaponFiringSystem : MonoBehaviour
 
                     try
                     {
-                        hit.transform.gameObject.GetComponent<DamageReciever>().RecieveHit(currentWeapon.GetCurrentWeapon().baseDamage);
+                        hit.transform.gameObject.GetComponent<DamageReciever>().RecieveHit(currentWeapon.GetCurrentWeapon().parameters.baseDamage);
                     }
                     catch (Exception ex)
                     {
@@ -218,8 +218,8 @@ public class WeaponFiringSystem : MonoBehaviour
 
                 if (muzzleFlashContainer == null)
                 {
-                    muzzleFlashContainer = Instantiate(currentWeapon.GetCurrentWeapon().muzzleFlash, transform);
-                    muzzleFlashContainer.transform.localPosition = currentWeapon.GetCurrentWeapon().barrelExit;
+                    muzzleFlashContainer = Instantiate(currentWeapon.GetCurrentWeapon().parameters.muzzleFlash, transform);
+                    muzzleFlashContainer.transform.localPosition = currentWeapon.GetCurrentWeapon().parameters.barrelExit;
                 }
 
                 muzzleFlashContainer.GetComponent<ParticleSystem>().Play();
@@ -268,8 +268,8 @@ public class WeaponFiringSystem : MonoBehaviour
             if (currentWeapon.isPrimary)
             {
                 currentWeapon.primaryAmmo += currentWeapon.primaryCurrentMag;
-                currentWeapon.primaryCurrentMag = currentWeapon.primary.magazineSize;
-                currentWeapon.primaryAmmo -= currentWeapon.primary.magazineSize;
+                currentWeapon.primaryCurrentMag = currentWeapon.primary.parameters.magazineSize;
+                currentWeapon.primaryAmmo -= currentWeapon.primary.parameters.magazineSize;
 
                 if (currentWeapon.primaryAmmo < 0)
                 {
@@ -280,8 +280,8 @@ public class WeaponFiringSystem : MonoBehaviour
             else if (!currentWeapon.isPrimary)
             {
                 currentWeapon.secondaryAmmo += currentWeapon.secondaryCurrentMag;
-                currentWeapon.secondaryCurrentMag = currentWeapon.secondary.magazineSize;
-                currentWeapon.secondaryAmmo -= currentWeapon.secondary.magazineSize;
+                currentWeapon.secondaryCurrentMag = currentWeapon.secondary.parameters.magazineSize;
+                currentWeapon.secondaryAmmo -= currentWeapon.secondary.parameters.magazineSize;
 
                 if (currentWeapon.secondaryAmmo < 0)
                 {

@@ -2,158 +2,291 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System;
 
-public class WeaponEditor : EditorWindow
+public enum EditorWindowStates
 {
-    [Tooltip("visit www.Morgan.Games for more!")]
-    public Texture aTexture;
+    generateNew,
+    editExisting
+}
 
-    public GameObject baseWeaponPrefab;
-    public string weaponsFolder = "Assets/Weapon System/Scriptable Objects/";
+public struct EditorGlobalVariables
+{
+    public const string weaponsFolder = "Assets/Weapon System/Scriptable Objects/";
+}
 
-    //Weapon parameters
-    new string name = "new gun";
-    string description = "this is a new gun and has not yet been assigned a description";
-    Texture thumbnail;
-    GameObject model;
-    bool flipY = true;
-    int baseDamage = 10;
-    int criticalMultiplier = 10;
-    bool automatic = true;
-    int startAmmo = 100;
-    int magazineSize = 30;
-    int reloadSpeed = 5000;
-    int fireRate = 100;
-    int effectiveRange = 10;
-    int range = 100;
-    float adsSpeed = 0.5f;
-    AudioClip shot, emptyShot, reload;
-    Vector3 barrelExit;
-    GameObject muzzleFlash, impactShot;
+public class WeaponConfigurator : EditorWindow
+{
+    [MenuItem("Window/Weapon System/Configure Weapon System")]
+    public static void ShowConfigWindow()
+    {
+        GetWindow<WeaponConfigurator>("Weapon System Configurator");
+    }
+}
 
-    private string UIspacer = "                                                                                                                                                                                                                                                                                                                                                                             ";
-
+public class WeaponParameterEditor : EditorWindow
+{
+    public WeaponParameters parameters;
+    public Weapon editingWeapon;
+    public WeaponParameters editingParameters;
 
     [MenuItem("Window/Weapon System/Weapon Editor")]
-    public static void ShowWindow()
+    public static void ShowToolsWindow()
     {
-        GetWindow<WeaponEditor>("Weapon Parameter Editor");
+        GetWindow<WeaponParameterEditor>("Weapon Editor");
     }
+
+    EditorWindowStates editorWindowState = EditorWindowStates.editExisting;
 
     void OnGUI()
     {
-        GUI.DrawTexture(new Rect(10, 10, 320, 64), aTexture, ScaleMode.StretchToFill, true, 10.0F);
-        GUILayout.Label("\n\n\n\n\n\nThis is the weapon editor window. Here you can edit the parameters of weapon objects to manually balance them.", EditorStyles.wordWrappedLabel);
+        var style = new GUIStyle(GUI.skin.label);
+        style.alignment = TextAnchor.UpperLeft;
+        style.fixedWidth = 148;
 
-        GenerateNewWeapon();
+        var buttonStyle = new GUIStyle(GUI.skin.button);
+        buttonStyle.fixedHeight = 50;
+
+        var buttonStyleRed = new GUIStyle(GUI.skin.button);
+        buttonStyleRed.fixedHeight = 50;
+        buttonStyleRed.normal.textColor = Color.red;
+        buttonStyleRed.hover.textColor = Color.red;
+
+        var buttonStyleGreen = new GUIStyle(GUI.skin.button);
+        buttonStyleGreen.fixedHeight = 50;
+        buttonStyleGreen.normal.textColor = Color.green;
+        buttonStyleGreen.hover.textColor = Color.green;
+
+        if (editorWindowState == EditorWindowStates.generateNew)
+        {
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Generate New", buttonStyleGreen))
+            {
+                parameters = new WeaponParameters();
+                editorWindowState = EditorWindowStates.generateNew;
+            }
+            if (GUILayout.Button("Edit Existing", buttonStyle))
+            {
+                parameters = new WeaponParameters();
+                editorWindowState = EditorWindowStates.editExisting;
+            }
+            if (GUILayout.Button("Re-configure Weapon System", buttonStyleRed))
+            {
+                GetWindow<WeaponConfigurator>("Weapon System Configurator");
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.Label("\n", style);
+
+            GenerateNewWeapon();
+        }
+        else if (editorWindowState == EditorWindowStates.editExisting)
+        {
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Generate New", buttonStyle))
+            {
+                parameters = new WeaponParameters();
+                editorWindowState = EditorWindowStates.generateNew;
+            }
+            if (GUILayout.Button("Edit Existing", buttonStyleGreen))
+            {
+                parameters = new WeaponParameters();
+                editorWindowState = EditorWindowStates.editExisting;
+            }
+            if (GUILayout.Button("Re-configure Weapon System", buttonStyleRed))
+            {
+                GetWindow<WeaponConfigurator>("Weapon System Configurator");
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.Label("\n", style);
+
+            EditExistingWeapon();
+        }
+
     }
-
     void GenerateNewWeapon()
     {
-        name = EditorGUILayout.TextField("name", name);
-        description = EditorGUILayout.TextField("description", description);
-        baseDamage = EditorGUILayout.IntField("base damage", baseDamage);
-        criticalMultiplier = EditorGUILayout.IntField("critical multiplier", criticalMultiplier);
-        startAmmo = EditorGUILayout.IntField("starting ammo", startAmmo);
-        magazineSize = EditorGUILayout.IntField("magazine size", magazineSize);
-        reloadSpeed = EditorGUILayout.IntField("reload speed", reloadSpeed);
-        fireRate = EditorGUILayout.IntField("fire rate", fireRate);
-        effectiveRange = EditorGUILayout.IntField("effective range", effectiveRange);
-        range = EditorGUILayout.IntField("range", range);
-        adsSpeed = EditorGUILayout.FloatField("ads speed", adsSpeed);
+        parameters = new WeaponParameters(
+            EditorGUILayout.TextField("name", parameters.name),
+            EditorGUILayout.TextField("description", parameters.description),
+            TextureField("thumbnail", parameters.thumbnail),
+            GameObjectField("model", parameters.model),
+            EditorGUILayout.Toggle("flip Y", parameters.flipY),
+            EditorGUILayout.IntField("base damage", parameters.baseDamage),
+            EditorGUILayout.IntField("critical multiplier", parameters.criticalMultiplier),
+            EditorGUILayout.IntField("effective range", parameters.effectiveRange),
+            EditorGUILayout.IntField("range", parameters.range),
+            EditorGUILayout.Toggle("automatic", parameters.automatic),
+            EditorGUILayout.IntField("fire rate", parameters.fireRate),
+            EditorGUILayout.IntField("starting ammo", parameters.startAmmo),
+            EditorGUILayout.IntField("magazine size", parameters.magazineSize),
+            EditorGUILayout.FloatField("reload speed", parameters.reloadSpeed),
+            EditorGUILayout.FloatField("ads speed", parameters.adsSpeed),
+            AudioClipField("shot", parameters.shotSound),
+            AudioClipField("empty Shot", parameters.emptyShotSound),
+            AudioClipField("reload", parameters.reloadSound),
+            EditorGUILayout.Vector3Field("barrel exit position", parameters.barrelExit),
+            GameObjectField("muzzle flash effect", parameters.muzzleFlash),
+            GameObjectField("impact shot effect", parameters.impactShot),
+            AnimationClipField("reload animation", parameters.reloadAnim)
+            );
 
-        automatic = EditorGUILayout.Toggle("automatic", automatic);
+        var style = new GUIStyle(GUI.skin.label);
+        style.alignment = TextAnchor.UpperLeft;
+        style.fixedWidth = 148;
+        GUILayout.Label("\n", style);
+        var buttonStyle = new GUIStyle(GUI.skin.button);
+        buttonStyle.fixedHeight = 50;
 
-        barrelExit = EditorGUILayout.Vector3Field("barrel exit position", barrelExit);
-        flipY = EditorGUILayout.Toggle("flip Y", flipY);
-
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.Label(UIspacer, EditorStyles.wordWrappedLabel);
-        thumbnail = TextureField("thumbnail", thumbnail);
-        model = GameObjectField("model", model);
-        EditorGUILayout.EndHorizontal();
-
-
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.Label(UIspacer, EditorStyles.wordWrappedLabel);
-        shot = AudioClipField("shot", shot);
-        emptyShot = AudioClipField("empty Shot", emptyShot);
-        reload = AudioClipField("reload", reload);
-        EditorGUILayout.EndHorizontal();
-
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.Label(UIspacer, EditorStyles.wordWrappedLabel);
-        muzzleFlash = GameObjectField("muzzle flash effect", muzzleFlash);
-        impactShot = GameObjectField("impact shot effect", impactShot);
-        EditorGUILayout.EndHorizontal();
-
-
-        GUILayout.Label("\n", EditorStyles.wordWrappedLabel);
-
-        if (GUILayout.Button("Generate New Weapon Prefab"))
+        if (GUILayout.Button("Generate New Weapon Prefab", buttonStyle))
         {
-            Weapon newWeapon = new Weapon();
+            Debug.Log(parameters.name);
 
-            if (thumbnail != null)
-                newWeapon.thumbnail = thumbnail;
-            if (model != null)
-                newWeapon.model = model;
-            newWeapon.flipY = flipY;
-            newWeapon.name = name;
-            newWeapon.description = description;
-            newWeapon.baseDamage = baseDamage;
-            newWeapon.criticalMultiplier = criticalMultiplier;
-            newWeapon.automatic = automatic;
-            newWeapon.magazineSize = magazineSize;
-            newWeapon.reloadSpeed = reloadSpeed;
-            newWeapon.FireRate = fireRate;
-            newWeapon.EffectiveRange = effectiveRange;
-            newWeapon.Range = range;
-            newWeapon.AdsSpeed = adsSpeed;
-            newWeapon.shot = shot;
-            newWeapon.emptyShot = emptyShot;
-            newWeapon.reload = reload;
-            newWeapon.barrelExit = barrelExit;
-            newWeapon.muzzleFlash = muzzleFlash;
-            newWeapon.impactShot = impactShot;
+            Weapon newWeapon = CreateInstance<Weapon>();
+            newWeapon.parameters = parameters;
 
-            AssetDatabase.CreateAsset(newWeapon, weaponsFolder + name + ".asset");
-            Debug.Log("Generated new weapon");
+            AssetDatabase.CreateAsset(newWeapon, EditorGlobalVariables.weaponsFolder + parameters.name + ".asset");
+            EditorUtility.SetDirty(newWeapon);
+            Debug.Log("Generated new weapon: " + newWeapon.name);
         }
+    }
+
+    void EditExistingWeapon()
+    {
+        var style = new GUIStyle(GUI.skin.label);
+        style.alignment = TextAnchor.UpperLeft;
+        style.normal.textColor = Color.red;
+        style.hover.textColor = Color.red;
+
+        var buttonStyle = new GUIStyle(GUI.skin.button);
+        buttonStyle.fixedHeight = 50;
+
+        var buttonStyleRed = new GUIStyle(GUI.skin.button);
+        buttonStyleRed.fixedHeight = 50;
+        buttonStyleRed.normal.textColor = Color.red;
+        buttonStyleRed.hover.textColor = Color.red;
+
+        
+
+        if (editingWeapon != null)
+        {
+            editingWeapon = WeaponField("WEAPON TO EDIT", editingWeapon);
+            GUILayout.Label("IMPORTANT: Do not reset this value to null or the editor will crash!", style);
+            GUILayout.Label("\n\n", style);
+
+            EditorGUILayout.TextField("name", editingWeapon.name);
+            editingWeapon.parameters.description = EditorGUILayout.TextField("description", editingWeapon.parameters.description);
+            editingWeapon.parameters.thumbnail = TextureField("thumbnail", editingWeapon.parameters.thumbnail);
+            editingWeapon.parameters.model = GameObjectField("model", editingWeapon.parameters.model);
+            editingWeapon.parameters.flipY = EditorGUILayout.Toggle("flip Y", editingWeapon.parameters.flipY);
+            editingWeapon.parameters.baseDamage = EditorGUILayout.IntField("base damage", editingWeapon.parameters.baseDamage);
+            editingWeapon.parameters.criticalMultiplier = EditorGUILayout.IntField("critical multiplier", editingWeapon.parameters.criticalMultiplier);
+            editingWeapon.parameters.effectiveRange = EditorGUILayout.IntField("effective range", editingWeapon.parameters.effectiveRange);
+            editingWeapon.parameters.range = EditorGUILayout.IntField("range", editingWeapon.parameters.range);
+            editingWeapon.parameters.automatic = EditorGUILayout.Toggle("automatic", editingWeapon.parameters.automatic);
+            editingWeapon.parameters.fireRate = EditorGUILayout.IntField("fire rate", editingWeapon.parameters.fireRate);
+            editingWeapon.parameters.startAmmo = EditorGUILayout.IntField("starting ammo", editingWeapon.parameters.startAmmo);
+            editingWeapon.parameters.magazineSize = EditorGUILayout.IntField("magazine size", editingWeapon.parameters.magazineSize);
+            editingWeapon.parameters.reloadSpeed = EditorGUILayout.FloatField("reload speed", editingWeapon.parameters.reloadSpeed);
+            editingWeapon.parameters.adsSpeed = EditorGUILayout.FloatField("ads speed", editingWeapon.parameters.adsSpeed);
+            editingWeapon.parameters.shotSound = AudioClipField("shot", editingWeapon.parameters.shotSound);
+            editingWeapon.parameters.emptyShotSound = AudioClipField("empty Shot", editingWeapon.parameters.emptyShotSound);
+            editingWeapon.parameters.reloadSound = AudioClipField("reload", editingWeapon.parameters.reloadSound);
+            editingWeapon.parameters.barrelExit = EditorGUILayout.Vector3Field("barrel exit position", editingWeapon.parameters.barrelExit);
+            editingWeapon.parameters.muzzleFlash = GameObjectField("muzzle flash effect", editingWeapon.parameters.muzzleFlash);
+            editingWeapon.parameters.impactShot = GameObjectField("impact shot effect", editingWeapon.parameters.impactShot);
+            editingWeapon.parameters.reloadAnim = AnimationClipField("reload animation", editingWeapon.parameters.reloadAnim);
+
+            GUILayout.Label("\n\n", style);
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Save Edit", buttonStyle))
+            {
+                EditorUtility.SetDirty(editingWeapon);
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+
+                Debug.Log("Edits saved");
+            }
+            if (GUILayout.Button("Delete Weapon", buttonStyleRed))
+            {
+                if (AssetDatabase.DeleteAsset(EditorGlobalVariables.weaponsFolder + editingWeapon.name + ".asset"))
+                {
+                    Debug.Log("Deleted asset successfully");
+                }
+                else
+                {
+                    Debug.LogWarning("There was a problem deleting the asset");
+                }
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.Label("\n", style);
+        }
+        else if (editingWeapon == null)
+        {
+            editingWeapon = WeaponField("WEAPON TO EDIT", null);
+            GUILayout.Label("IMPORTANT: Do not reset this value to null or the editor will crash!", style);
+            GUILayout.Label("\n\n", style);
+        }
+
+        GUILayout.Label("\n", style);
     }
 
     private static AudioClip AudioClipField(string name, AudioClip audioClip)
     {
-        GUILayout.BeginVertical();
+        GUILayout.BeginHorizontal();
         var style = new GUIStyle(GUI.skin.label);
-        style.alignment = TextAnchor.UpperCenter;
-        style.fixedWidth = 70;
+        style.alignment = TextAnchor.UpperLeft;
+        style.fixedWidth = 148;
         GUILayout.Label(name, style);
-        var result = (AudioClip)EditorGUILayout.ObjectField(audioClip, typeof(AudioClip), false, GUILayout.Width(70), GUILayout.Height(70));
-        GUILayout.EndVertical();
+        var result = (AudioClip)EditorGUILayout.ObjectField(audioClip, typeof(AudioClip), false);
+        GUILayout.EndHorizontal();
         return result;
     }
 
     private static Texture TextureField(string name, Texture texture)
     {
-        GUILayout.BeginVertical();
+        GUILayout.BeginHorizontal();
         var style = new GUIStyle(GUI.skin.label);
-        style.alignment = TextAnchor.UpperCenter;
-        style.fixedWidth = 70;
+        style.alignment = TextAnchor.UpperLeft;
+        style.fixedWidth = 148;
         GUILayout.Label(name, style);
-        var result = (Texture)EditorGUILayout.ObjectField(texture, typeof(Texture), false, GUILayout.Width(70), GUILayout.Height(70));
+        var result = (Texture)EditorGUILayout.ObjectField(texture, typeof(Texture), false);
+        GUILayout.EndVertical();
+        return result;
+    }
+
+    private static AnimationClip AnimationClipField(string name, AnimationClip animationClip)
+    {
+        GUILayout.BeginHorizontal();
+        var style = new GUIStyle(GUI.skin.label);
+        style.alignment = TextAnchor.UpperLeft;
+        style.fixedWidth = 148;
+        GUILayout.Label(name, style);
+        var result = (AnimationClip)EditorGUILayout.ObjectField(animationClip, typeof(AnimationClip), false);
         GUILayout.EndVertical();
         return result;
     }
 
     private static GameObject GameObjectField(string name, GameObject gameObject)
     {
-        GUILayout.BeginVertical();
+        GUILayout.BeginHorizontal();
         var style = new GUIStyle(GUI.skin.label);
-        style.alignment = TextAnchor.UpperCenter;
-        style.fixedWidth = 70;
+        style.alignment = TextAnchor.UpperLeft;
+        style.fixedWidth = 148;
         GUILayout.Label(name, style);
-        var result = (GameObject)EditorGUILayout.ObjectField(gameObject, typeof(GameObject), false, GUILayout.Width(70), GUILayout.Height(70));
+        var result = (GameObject)EditorGUILayout.ObjectField(gameObject, typeof(GameObject), false);
+        GUILayout.EndVertical();
+        return result;
+    }
+
+    private static Weapon WeaponField(string name, Weapon weaponObject)
+    {
+        GUILayout.BeginHorizontal();
+        var style = new GUIStyle(GUI.skin.label);
+        style.alignment = TextAnchor.UpperLeft;
+        style.fixedWidth = 148;
+        GUILayout.Label(name, style);
+        var result = (Weapon)EditorGUILayout.ObjectField(weaponObject, typeof(Weapon), false);
         GUILayout.EndVertical();
         return result;
     }
