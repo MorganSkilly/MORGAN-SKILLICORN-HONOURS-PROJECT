@@ -445,7 +445,9 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
-"Assets/Weapon System/Editor/WeaponEditor.cs"
+"Assets/Weapon System/Editor/Analytics/EditorGraphs.cs"
+"Assets/Weapon System/Editor/Analytics/WeaponSystem_AnalyticsTesting.cs"
+"Assets/Weapon System/Editor/WeaponSystem_WeaponEditor.cs"
 -langversion:9.0
 
 /deterministic

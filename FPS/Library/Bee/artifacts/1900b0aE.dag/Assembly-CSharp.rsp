@@ -352,15 +352,15 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
-"Assets/Weapon System/ActiveWeaponManager.cs"
-"Assets/Weapon System/DamageManager.cs"
-"Assets/Weapon System/DamageReciever.cs"
 "Assets/Weapon System/Default Assets/Basic Movement Controller/Player Movement.cs"
-"Assets/Weapon System/MovementController.cs"
 "Assets/Weapon System/Scriptable Objects/Scripts/Weapon.cs"
 "Assets/Weapon System/Weapon Inputs.cs"
-"Assets/Weapon System/WeaponFiringSystem.cs"
-"Assets/Weapon System/WeaponTarget.cs"
+"Assets/Weapon System/WeaponSystem_DamageManager.cs"
+"Assets/Weapon System/WeaponSystem_DamageReciever.cs"
+"Assets/Weapon System/WeaponSystem_InputDetection.cs"
+"Assets/Weapon System/WeaponSystem_LogicHandler.cs"
+"Assets/Weapon System/WeaponSystem_SampleMovementController.cs"
+"Assets/Weapon System/WeaponSystem_WeaponTarget.cs"
 -langversion:9.0
 
 /deterministic

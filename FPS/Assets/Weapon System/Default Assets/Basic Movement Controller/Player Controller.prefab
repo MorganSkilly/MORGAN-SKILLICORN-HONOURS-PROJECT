@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 585115601}
-  - component: {fileID: 585115602}
-  - component: {fileID: 585115603}
+  - component: {fileID: 9120894620183525059}
+  - component: {fileID: 1521512914858451431}
   - component: {fileID: 2044116510}
   m_Layer: 2
   m_Name: Active Weapon
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 2072376986}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 10.269, y: -200.287, z: 7.573}
---- !u!114 &585115602
+--- !u!114 &9120894620183525059
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,18 +43,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 585115600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7f4d489482f9ce4fa7d0c7d623bd307, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f5867d7f08cb0f48a57417f75c1d7c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primary: {fileID: 11400000, guid: 66498a708bfecc641ba06d57f6ba04ac, type: 2}
-  secondary: {fileID: 11400000, guid: 3ebe3091d803d8e42a1a750f16e6fc03, type: 2}
-  primaryAmmo: 0
-  secondaryAmmo: 0
-  primaryCurrentMag: 0
-  secondaryCurrentMag: 0
-  isPrimary: 1
-  lookAt: {fileID: 1326444500}
---- !u!114 &585115603
+--- !u!114 &1521512914858451431
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,17 +55,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 585115600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1506179af88596e4f959e4ccd45ce1b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 180674cf5314cd646a66063e5f52c15b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastOrigin: {fileID: 963194225}
-  currentWeapon: {fileID: 0}
-  targetPos: {fileID: 1326444500}
-  shot: {fileID: 8300000, guid: 4e14f36365321004fa6277cf1cca433a, type: 3}
-  magEmpty: {fileID: 8300000, guid: f96ff6b6163ec904997d0c2f76b554b6, type: 3}
-  reload: {fileID: 0}
-  muzzleFlash: {fileID: 0}
-  particleEffect: {fileID: 5657496265996640836, guid: ebdb945a0d399e9468fd0c10d1cfe341, type: 3}
+  primaryWeapon: {fileID: 0}
+  secondaryWeapon: {fileID: 0}
 --- !u!82 &2044116510
 AudioSource:
   m_ObjectHideFlags: 0
@@ -231,8 +217,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 2.37, z: 0.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1326444501}
+  m_Children: []
   m_Father: {fileID: 2072376986}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -393,37 +378,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3500028186395534758}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1326444500
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1326444501}
-  m_Layer: 2
-  m_Name: LookAtPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1326444501
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1326444500}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 18.26}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 963194228}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1371179980
 GameObject:
