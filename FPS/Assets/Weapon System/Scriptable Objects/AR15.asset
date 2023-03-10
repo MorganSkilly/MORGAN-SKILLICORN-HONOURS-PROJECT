@@ -21,13 +21,13 @@ MonoBehaviour:
     baseDamage: 10
     criticalMultiplier: 10
     effectiveRange: 10
-    range: 100
+    range: 10
     automatic: 1
-    fireRate: 360
-    startAmmo: 1000
-    magazineSize: 30
+    fireRate: 100
+    startAmmo: 10
+    magazineSize: 10
     reloadSpeed: 10
-    adsSpeed: 5
+    adsSpeed: 10
     shotSound: {fileID: 8300000, guid: 4e14f36365321004fa6277cf1cca433a, type: 3}
     emptyShotSound: {fileID: 8300000, guid: f96ff6b6163ec904997d0c2f76b554b6, type: 3}
     reloadSound: {fileID: 8300000, guid: c9a7d8b4af8adb54aad4a144ad181587, type: 3}

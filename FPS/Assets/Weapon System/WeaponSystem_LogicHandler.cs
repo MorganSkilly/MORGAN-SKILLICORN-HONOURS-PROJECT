@@ -159,8 +159,6 @@ public class WeaponSystem_LogicHandler : MonoBehaviour
                     fpsCamera.transform.TransformDirection(Vector3.forward),
                     out hit, Mathf.Infinity, layerMask))
             {
-                
-
                 shootTimer += Time.deltaTime;
 
                 float fireRate = currentWeapon.parameters.fireRate / 60;
@@ -387,6 +385,7 @@ public class WeaponSystem_LogicHandler : MonoBehaviour
         {
             firing = false;
         }
+
     }
 
     public void Reload(bool onClick)
