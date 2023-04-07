@@ -39,6 +39,16 @@ public struct WeaponParameters
     public float reloadSpeed;
     public float adsSpeed;
 
+    //recoil values
+    public Vector3 adsRecoil;
+    public float adsRecoilRandomness;
+    public float adsRecoilSnap;
+    public float adsRecoilReturn;
+    public Vector3 hipRecoil;
+    public float hipRecoilRandomness;
+    public float hipRecoilSnap;
+    public float hipRecoilReturn;
+
     //audio clips
     public AudioClip shotSound, emptyShotSound, reloadSound;
 
@@ -76,6 +86,15 @@ public struct WeaponParameters
         float reloadSpeed,
         float adsSpeed,
 
+        Vector3 adsRecoil,
+        float adsRecoilRandomness,
+        float adsRecoilSnap,
+        float adsRecoilReturn,
+        Vector3 hipRecoil,
+        float hipRecoilRandomness,
+        float hipRecoilSnap,
+        float hipRecoilReturn,
+
         AudioClip shotSound,
         AudioClip emptyShotSound,
         AudioClip reloadSound,
@@ -112,6 +131,15 @@ public struct WeaponParameters
         this.reloadSpeed = reloadSpeed;
         this.adsSpeed = adsSpeed;
 
+        this.adsRecoil = adsRecoil;
+        this.adsRecoilRandomness = adsRecoilRandomness;
+        this.adsRecoilSnap = adsRecoilSnap;
+        this.adsRecoilReturn = adsRecoilReturn;
+        this.hipRecoil = hipRecoil;
+        this.hipRecoilRandomness = hipRecoilRandomness;
+        this.hipRecoilSnap = hipRecoilSnap;
+        this.hipRecoilReturn = hipRecoilReturn;
+
         this.shotSound = shotSound;
         this.emptyShotSound = emptyShotSound;
         this.reloadSound = reloadSound;
@@ -125,7 +153,7 @@ public struct WeaponParameters
     }
 }
 
-[CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon System/Create New Profile")]
+[CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon Object")]
 public class Weapon : ScriptableObject
 {
     public WeaponParameters parameters;

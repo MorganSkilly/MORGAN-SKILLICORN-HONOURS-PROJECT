@@ -18,16 +18,24 @@ MonoBehaviour:
     thumbnail: {fileID: 2800000, guid: deecbf0202ef8eb4281f606dda88cba1, type: 3}
     model: {fileID: 6871168994223393390, guid: 75158a5002d96f841b1b94f1c3f0afc1, type: 3}
     flipY: 1
-    baseDamage: 30
-    criticalMultiplier: 30
-    effectiveRange: 30
-    range: 30
+    baseDamage: 20
+    criticalMultiplier: 100
+    effectiveRange: 5
+    range: 50
     automatic: 0
-    fireRate: 30
-    startAmmo: 30
-    magazineSize: 30
+    fireRate: 1000
+    startAmmo: 60
+    magazineSize: 10
     reloadSpeed: 30
     adsSpeed: 30
+    adsRecoil: {x: 2, y: 2, z: 2}
+    adsRecoilRandomness: 2
+    adsRecoilSnap: 2
+    adsRecoilReturn: 2
+    hipRecoil: {x: 2, y: 2, z: 2}
+    hipRecoilRandomness: 2
+    hipRecoilSnap: 2
+    hipRecoilReturn: 2
     shotSound: {fileID: 8300000, guid: 4e14f36365321004fa6277cf1cca433a, type: 3}
     emptyShotSound: {fileID: 8300000, guid: f96ff6b6163ec904997d0c2f76b554b6, type: 3}
     reloadSound: {fileID: 8300000, guid: c9a7d8b4af8adb54aad4a144ad181587, type: 3}

@@ -121,6 +121,14 @@ public class WeaponSystem_WeaponParameterEditor : EditorWindow
             EditorGUILayout.IntField("magazine size", parameters.magazineSize),
             EditorGUILayout.FloatField("reload speed", parameters.reloadSpeed),
             EditorGUILayout.FloatField("ads speed", parameters.adsSpeed),
+            EditorGUILayout.Vector3Field("ads recoil", parameters.adsRecoil),
+            EditorGUILayout.FloatField("ads recoil randomness", parameters.adsRecoilRandomness),
+            EditorGUILayout.FloatField("ads recoil snap", parameters.adsRecoilSnap),
+            EditorGUILayout.FloatField("ads recoil return", parameters.adsRecoilReturn),
+            EditorGUILayout.Vector3Field("hip recoil", parameters.hipRecoil),
+            EditorGUILayout.FloatField("hip recoil randomness", parameters.hipRecoilRandomness),
+            EditorGUILayout.FloatField("hip recoil snap", parameters.hipRecoilSnap),
+            EditorGUILayout.FloatField("hip recoil return", parameters.hipRecoilReturn),
             AudioClipField("shot audio", parameters.shotSound),
             AudioClipField("empty Shot audio", parameters.emptyShotSound),
             AudioClipField("reload audio", parameters.reloadSound),
@@ -189,6 +197,14 @@ public class WeaponSystem_WeaponParameterEditor : EditorWindow
                 editingWeapon.parameters.magazineSize = EditorGUILayout.IntField("magazine size", editingWeapon.parameters.magazineSize);
                 editingWeapon.parameters.reloadSpeed = EditorGUILayout.FloatField("reload speed", editingWeapon.parameters.reloadSpeed);
                 editingWeapon.parameters.adsSpeed = EditorGUILayout.FloatField("ads speed", editingWeapon.parameters.adsSpeed);
+                editingWeapon.parameters.adsRecoil = EditorGUILayout.Vector3Field("ads recoil", editingWeapon.parameters.adsRecoil);
+                editingWeapon.parameters.adsRecoilRandomness = EditorGUILayout.FloatField("ads recoil randomness", editingWeapon.parameters.adsRecoilRandomness);
+                editingWeapon.parameters.adsRecoilSnap = EditorGUILayout.FloatField("ads recoil snap", editingWeapon.parameters.adsRecoilSnap);
+                editingWeapon.parameters.adsRecoilReturn = EditorGUILayout.FloatField("ads recoil return", editingWeapon.parameters.adsRecoilReturn);
+                editingWeapon.parameters.hipRecoil = EditorGUILayout.Vector3Field("hip recoil", editingWeapon.parameters.hipRecoil);
+                editingWeapon.parameters.hipRecoilRandomness = EditorGUILayout.FloatField("hip recoil randomness", editingWeapon.parameters.hipRecoilRandomness);
+                editingWeapon.parameters.hipRecoilSnap = EditorGUILayout.FloatField("hip recoil snap", editingWeapon.parameters.hipRecoilSnap);
+                editingWeapon.parameters.hipRecoilReturn = EditorGUILayout.FloatField("hip recoil return", editingWeapon.parameters.hipRecoilReturn);
                 editingWeapon.parameters.shotSound = AudioClipField("shot audio", editingWeapon.parameters.shotSound);
                 editingWeapon.parameters.emptyShotSound = AudioClipField("empty Shot audio", editingWeapon.parameters.emptyShotSound);
                 editingWeapon.parameters.reloadSound = AudioClipField("reload audio", editingWeapon.parameters.reloadSound);

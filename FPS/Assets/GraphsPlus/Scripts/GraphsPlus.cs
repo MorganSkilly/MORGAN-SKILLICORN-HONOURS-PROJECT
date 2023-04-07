@@ -86,9 +86,29 @@ public class GraphsPlus : MonoBehaviour
 
             for (int i = 0; i < axis.segments; i++)
             {
+                GUIStyle labelStyle = new GUIStyle();
+                labelStyle.normal.textColor = new Color(0.8f, 0.8f, 0.8f);
+                labelStyle.hover.textColor = new Color(0.8f, 0.8f, 0.8f);
+
                 float angle = i * Mathf.PI * 2 / axis.segments;
                 Vector2 pointOnCircle = axis.centre + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * axis.radius;
-                GUI.Label(new Rect(pointOnCircle.x - 10, pointOnCircle.y, 100, 30), dataSets[0].dataPoints[i].label);
+
+                if ((pointOnCircle.x <= axis.centre.x) && (pointOnCircle.y <= axis.centre.y))
+                {
+                    GUI.Label(new Rect(pointOnCircle.x - 80, pointOnCircle.y - 30, 100, 30), dataSets[0].dataPoints[i].label, labelStyle);
+                }
+                else if ((pointOnCircle.x >= axis.centre.x) && (pointOnCircle.y <= axis.centre.y))
+                {
+                    GUI.Label(new Rect(pointOnCircle.x + 30, pointOnCircle.y - 30, 100, 30), dataSets[0].dataPoints[i].label, labelStyle);
+                }
+                else if ((pointOnCircle.x <= axis.centre.x) && (pointOnCircle.y >= axis.centre.y))
+                {
+                    GUI.Label(new Rect(pointOnCircle.x - 80, pointOnCircle.y + 30, 100, 30), dataSets[0].dataPoints[i].label, labelStyle);
+                }
+                else if ((pointOnCircle.x >= axis.centre.x) && (pointOnCircle.y >= axis.centre.y))
+                {
+                    GUI.Label(new Rect(pointOnCircle.x + 30, pointOnCircle.y + 30, 100, 30), dataSets[0].dataPoints[i].label, labelStyle);
+                }
             }
 
             foreach (DataSet dataSet in dataSets)
@@ -109,7 +129,7 @@ public class GraphsPlus : MonoBehaviour
                 GUIStyle style = new GUIStyle();
                 style.normal.textColor = colours[dataSets.IndexOf(dataSet)];
 
-                GUILayout.BeginArea(new Rect(10, 15 * dataSets.IndexOf(dataSet) + 30, 100, 100));
+                GUILayout.BeginArea(new Rect(axis.centre.x - (axis.radius * 1.5f), (axis.centre.y - (axis.radius * 1.3f)) + (15 * dataSets.IndexOf(dataSet) + 30), 100, 100));
                 GUILayout.Label(dataSet.name, style);
                 GUILayout.EndArea();
             }
@@ -198,6 +218,24 @@ public class GraphsPlus : MonoBehaviour
 
         public List<DataPoint> dataPoints;
         public string name;
+
+        /// <summary>
+        /// Returns TRUE if the convex hull of this dataset fully encompasses the given dataset, else returns FALSE.
+        /// </summary>
+        public bool encompasses(DataSet dataSet)
+        {
+            bool encompassesDataSet = true;
+
+            foreach (DataPoint dataPoint in dataSet.dataPoints)
+            {
+                if (dataPoint.data >= dataPoints[dataSet.dataPoints.IndexOf(dataPoint)].data)
+                {
+                    encompassesDataSet = false;
+                }
+            }
+
+            return encompassesDataSet;
+        }        
     }
 
     public static void DrawLine(Color color, Vector2 start, Vector2 end)

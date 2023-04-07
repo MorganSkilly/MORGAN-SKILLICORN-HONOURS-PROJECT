@@ -25,7 +25,7 @@ public class WeaponSystem_LogicHandler : MonoBehaviour
     public Weapon primaryWeapon, secondaryWeapon;
     private Weapon currentWeapon;
 
-    private WeaponSlots currentWeaponSlot;
+    public WeaponSlots currentWeaponSlot;
     public enum WeaponSlots
     {
         primary,
@@ -63,6 +63,9 @@ public class WeaponSystem_LogicHandler : MonoBehaviour
 
     private Camera fpsCamera;
 
+    private Vector3 currentRecoilRotation, targetRecoilRotation;
+    private Vector3 currentCameraRotation, targetCameraRotation;
+
     #endregion
 
     void Start()
@@ -80,18 +83,36 @@ public class WeaponSystem_LogicHandler : MonoBehaviour
         aimingPosition.y = 2;
         aimingPosition.z = 0.5f;
 
-        ammo.primaryAmmo = primaryWeapon.parameters.startAmmo - primaryWeapon.parameters.magazineSize;
-        ammo.secondaryAmmo = secondaryWeapon.parameters.startAmmo - secondaryWeapon.parameters.magazineSize;
-        ammo.primaryCurrentMag = primaryWeapon.parameters.magazineSize;
-        ammo.secondaryCurrentMag = secondaryWeapon.parameters.magazineSize;
-        
+        ResetAmmo();
+
         weaponLookAt = fpsCamera.transform.position;
         weaponLookAt.z += 1000;
         RotateTowards(weaponLookAt);
     }
 
     void Update()
-    {
+    {      
+        if (isAds)
+        {
+            targetRecoilRotation = Vector3.Lerp(targetRecoilRotation, Vector3.zero, currentWeapon.parameters.adsRecoilReturn * Time.deltaTime);
+            currentRecoilRotation = Vector3.Slerp(currentRecoilRotation, targetRecoilRotation, currentWeapon.parameters.adsRecoilSnap * Time.fixedDeltaTime);
+            transform.localRotation = Quaternion.Euler(currentRecoilRotation);
+
+            targetCameraRotation = Vector3.Lerp(targetCameraRotation, Vector3.zero, currentWeapon.parameters.adsRecoilReturn * Time.deltaTime);
+            currentCameraRotation = Vector3.Slerp(currentCameraRotation, targetCameraRotation, currentWeapon.parameters.adsRecoilSnap * Time.fixedDeltaTime);
+            fpsCamera.transform.localRotation = Quaternion.Euler(currentCameraRotation);
+        }
+        else
+        {
+            targetRecoilRotation = Vector3.Lerp(targetRecoilRotation, Vector3.zero, currentWeapon.parameters.hipRecoilReturn * Time.deltaTime);
+            currentRecoilRotation = Vector3.Slerp(currentRecoilRotation, targetRecoilRotation, currentWeapon.parameters.hipRecoilSnap * Time.fixedDeltaTime);
+            transform.localRotation = Quaternion.Euler(currentRecoilRotation);
+
+            targetCameraRotation = Vector3.Lerp(targetCameraRotation, Vector3.zero, currentWeapon.parameters.hipRecoilReturn * Time.deltaTime);
+            currentCameraRotation = Vector3.Slerp(currentCameraRotation, targetCameraRotation, currentWeapon.parameters.hipRecoilSnap * Time.fixedDeltaTime);
+            fpsCamera.transform.localRotation = Quaternion.Euler(currentCameraRotation);
+        }
+
         int layerMask = 1 << 2;
         layerMask = ~layerMask;
 
@@ -251,15 +272,29 @@ public class WeaponSystem_LogicHandler : MonoBehaviour
                                 weaponSystemDebugInfo.Add("[HIT: invalid object]");
                             }
 
+                            if (isAds)
+                            {
+                                Vector3 gunRecoil = currentWeapon.parameters.adsRecoil;
+                                Vector3 generatedRecoil = new Vector3(gunRecoil.x, UnityEngine.Random.Range(gunRecoil.y * -currentWeapon.parameters.adsRecoilRandomness, gunRecoil.y * currentWeapon.parameters.adsRecoilRandomness), UnityEngine.Random.Range(gunRecoil.z * -currentWeapon.parameters.adsRecoilRandomness, gunRecoil.z * currentWeapon.parameters.adsRecoilRandomness));
+                                targetRecoilRotation += generatedRecoil;
+                                targetCameraRotation += generatedRecoil;
+                            }
+                            else
+                            {
+                                Vector3 gunRecoil = currentWeapon.parameters.hipRecoil;
+                                Vector3 generatedRecoil = new Vector3(gunRecoil.x, UnityEngine.Random.Range(gunRecoil.y * -currentWeapon.parameters.hipRecoilRandomness, gunRecoil.y * currentWeapon.parameters.hipRecoilRandomness), UnityEngine.Random.Range(gunRecoil.z * -currentWeapon.parameters.hipRecoilRandomness, gunRecoil.z * currentWeapon.parameters.hipRecoilRandomness));
+                                targetRecoilRotation += generatedRecoil;
+                                targetCameraRotation += generatedRecoil;
+                            }
                         }
                     }
                 }
 
                 bool HasAmmo()
                 {
-                    if (currentWeaponSlot == WeaponSystem_LogicHandler.WeaponSlots.primary && ammo.primaryCurrentMag > 0)
+                    if (currentWeaponSlot == WeaponSlots.primary && ammo.primaryCurrentMag > 0)
                         return true;
-                    else if (currentWeaponSlot == WeaponSystem_LogicHandler.WeaponSlots.secondary && ammo.secondaryCurrentMag > 0)
+                    else if (currentWeaponSlot == WeaponSlots.secondary && ammo.secondaryCurrentMag > 0)
                         return true;
                     else
                         return false;
@@ -466,5 +501,13 @@ public class WeaponSystem_LogicHandler : MonoBehaviour
 
         clipOverrides["Reload"] = currentWeapon.parameters.reloadAnim;
         animatorOverrideController.ApplyOverrides(clipOverrides);
+    }
+
+    public void ResetAmmo()
+    {
+        ammo.primaryAmmo = primaryWeapon.parameters.startAmmo - primaryWeapon.parameters.magazineSize;
+        ammo.secondaryAmmo = secondaryWeapon.parameters.startAmmo - secondaryWeapon.parameters.magazineSize;
+        ammo.primaryCurrentMag = primaryWeapon.parameters.magazineSize;
+        ammo.secondaryCurrentMag = secondaryWeapon.parameters.magazineSize;
     }
 }

@@ -67,5 +67,23 @@ public class RadarGraphExample : EditorWindow
             10, dataSets[0].dataPoints.Count);
 
         radarGraph = new GraphsPlus.RadarGraph(radarGraphAxis, dataSets);
+
+        CheckConvexHulls(dataSets);
+    }
+
+    void CheckConvexHulls(List<GraphsPlus.DataSet> dataSets)
+    {
+        foreach (GraphsPlus.DataSet dataSetI in dataSets)
+        {
+            List<GraphsPlus.DataSet> dataSetWithThisRemoved = dataSets;
+
+            foreach (GraphsPlus.DataSet dataSetJ in dataSetWithThisRemoved)
+            {
+                if (dataSetI.encompasses(dataSetJ) && dataSetI.name != dataSetJ.name)
+                {
+                    Debug.LogWarning("The convex hull of " + dataSetI.name + " fully encompasses that of " + dataSetJ.name);
+                }
+            }
+        }
     }
 }

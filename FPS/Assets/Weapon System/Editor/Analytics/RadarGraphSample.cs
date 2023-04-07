@@ -49,9 +49,9 @@ public class RadarGraphSample : EditorWindow
         {
             List<GraphsPlus.DataPoint> dataSet1 = new List<GraphsPlus.DataPoint>();
             dataSet1.Add(new GraphsPlus.DataPoint("base damage", weapon.parameters.baseDamage, 0f, 100f));
-            dataSet1.Add(new GraphsPlus.DataPoint("effective range", weapon.parameters.effectiveRange, 0f, 100f));
-            dataSet1.Add(new GraphsPlus.DataPoint("fire rate", weapon.parameters.fireRate, 0f, 100));
-            dataSet1.Add(new GraphsPlus.DataPoint("magazine size", weapon.parameters.magazineSize, 0f, 100f));
+            dataSet1.Add(new GraphsPlus.DataPoint("effective range", weapon.parameters.effectiveRange, 0f, 50f));
+            dataSet1.Add(new GraphsPlus.DataPoint("fire rate", weapon.parameters.fireRate, 0f, 1000));
+            dataSet1.Add(new GraphsPlus.DataPoint("magazine size", weapon.parameters.magazineSize, 0f, 50f));
             dataSet1.Add(new GraphsPlus.DataPoint("range", weapon.parameters.range, 0f, 100));
             GraphsPlus.DataSet dataset = new GraphsPlus.DataSet(dataSet1, weapon.name);
             dataSets.Add(dataset);

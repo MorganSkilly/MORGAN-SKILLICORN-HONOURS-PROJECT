@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f4d5f298b46d4408107203780b92c9, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: 
+  parameters:
+    name: Shotgun
+    description: Shotgun
+    thumbnail: {fileID: 2800000, guid: deecbf0202ef8eb4281f606dda88cba1, type: 3}
+    model: {fileID: 6871168994223393390, guid: 5f16e283678ff37489ea51be41990f4f, type: 3}
+    flipY: 0
+    baseDamage: 50
+    criticalMultiplier: 200
+    effectiveRange: 10
+    range: 30
+    automatic: 0
+    fireRate: 1200
+    startAmmo: 30
+    magazineSize: 2
+    reloadSpeed: 20
+    adsSpeed: 20
+    adsRecoil: {x: -10, y: 2, z: 0}
+    adsRecoilRandomness: 2
+    adsRecoilSnap: 6
+    adsRecoilReturn: 2
+    hipRecoil: {x: -10, y: 2, z: 0}
+    hipRecoilRandomness: 2
+    hipRecoilSnap: 6
+    hipRecoilReturn: 2
+    shotSound: {fileID: 8300000, guid: 4e14f36365321004fa6277cf1cca433a, type: 3}
+    emptyShotSound: {fileID: 8300000, guid: f96ff6b6163ec904997d0c2f76b554b6, type: 3}
+    reloadSound: {fileID: 8300000, guid: c9a7d8b4af8adb54aad4a144ad181587, type: 3}
+    barrelExit: {x: 0, y: 0.2, z: 1.2}
+    muzzleFlash: {fileID: 8297297760095153332, guid: cce667f80cb97b74bb871d44b01e3375, type: 3}
+    impactShot: {fileID: 5657496265996640836, guid: ebdb945a0d399e9468fd0c10d1cfe341, type: 3}
+    reloadAnim: {fileID: 7400000, guid: 4f8fbd9416c500b419d44fe8ff56fee1, type: 2}
