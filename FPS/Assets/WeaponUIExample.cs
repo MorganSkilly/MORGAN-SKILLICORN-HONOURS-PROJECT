@@ -31,9 +31,10 @@ public class WeaponUIExample : MonoBehaviour
             button.transform.SetParent(m_ContentContainer);
             //reset the item's scale -- this can get munged with UI prefabs
             button.transform.localScale = Vector2.one;
-
             button.GetComponent<changeWeapon>().weaponSystem = weaponSystem;
             button.GetComponent<changeWeapon>().weapon = character;
+            //button.GetComponentInChildren<TMP_Text>().autoSizeTextContainer = true;
+            button.GetComponentInChildren<TMP_Text>().fontSize = 10f;
             button.GetComponentInChildren<TMP_Text>().text = character.parameters.name;
         }
     }
