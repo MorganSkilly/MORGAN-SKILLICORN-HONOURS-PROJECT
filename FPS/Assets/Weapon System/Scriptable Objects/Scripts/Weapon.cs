@@ -23,7 +23,7 @@ public struct WeaponParameters
 
     //damage and range values
     public int baseDamage;
-    public int criticalMultiplier;
+    public float criticalMultiplier;
     public int effectiveRange;
     public int range;
 
@@ -40,12 +40,12 @@ public struct WeaponParameters
     public float adsSpeed;
 
     //recoil values
-    public Vector3 adsRecoil;
-    public float adsRecoilRandomness;
+    public Vector2 adsRecoil;
+    public Vector2 adsRecoilRandomness;
     public float adsRecoilSnap;
     public float adsRecoilReturn;
-    public Vector3 hipRecoil;
-    public float hipRecoilRandomness;
+    public Vector2 hipRecoil;
+    public Vector2 hipRecoilRandomness;
     public float hipRecoilSnap;
     public float hipRecoilReturn;
 
@@ -73,7 +73,7 @@ public struct WeaponParameters
         bool flipY,
 
         int baseDamage,
-        int criticalMultiplier,
+        float criticalMultiplier,
         int effectiveRange,
         int range,
 
@@ -86,12 +86,12 @@ public struct WeaponParameters
         float reloadSpeed,
         float adsSpeed,
 
-        Vector3 adsRecoil,
-        float adsRecoilRandomness,
+        Vector2 adsRecoil,
+        Vector2 adsRecoilRandomness,
         float adsRecoilSnap,
         float adsRecoilReturn,
-        Vector3 hipRecoil,
-        float hipRecoilRandomness,
+        Vector2 hipRecoil,
+        Vector2 hipRecoilRandomness,
         float hipRecoilSnap,
         float hipRecoilReturn,
 

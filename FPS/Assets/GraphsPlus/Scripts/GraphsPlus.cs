@@ -37,6 +37,16 @@ public class GraphsPlus : MonoBehaviour
 
             foreach (DataSet dataSet in dataSets)
             {
+                DataSet modifiedDataSet = dataSet;
+
+                for (int i = 0; i < modifiedDataSet.dataPoints.Count; i++)
+                {
+                    if (modifiedDataSet.dataPoints[i].inverted)
+                    {
+                        modifiedDataSet.dataPoints[i].modifyData(modifiedDataSet.dataPoints[i].data * -1);
+                    }
+                }
+
                 List<Color> colours = new List<Color>();
                 colours.Add(Color.red);
                 colours.Add(Color.magenta);
@@ -192,18 +202,26 @@ public class GraphsPlus : MonoBehaviour
             string label,
             float data,
             float min,
-            float max)
+            float max,
+            bool inverted)
         {
             this.label = label;
             this.data = data;
             this.min = min;
             this.max = max;
+            this.inverted = inverted;
         }
 
         public string label;
         public float data;
         public float min;
         public float max;
+        public bool inverted;
+
+        public void modifyData(float newData)
+        {
+            data = newData;
+        }
     }
 
     public struct DataSet
@@ -228,7 +246,7 @@ public class GraphsPlus : MonoBehaviour
 
             foreach (DataPoint dataPoint in dataSet.dataPoints)
             {
-                if (dataPoint.data >= dataPoints[dataSet.dataPoints.IndexOf(dataPoint)].data)
+                if (dataPoint.data > dataPoints[dataSet.dataPoints.IndexOf(dataPoint)].data)
                 {
                     encompassesDataSet = false;
                 }
